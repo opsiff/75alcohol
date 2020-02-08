@@ -208,31 +208,48 @@ void CMy75alcoholDlg::OnBnClickedButton2()
 	if (check != 3) {
 		MessageBox(__T("需要在四个框中填入三个数字"));
 	}
-	else if (Ac < Bc) {
+	else if (Ac < Bc && Ac != 0) {
 		MessageBox(__T("浓酒精浓度小于稀酒精"));
 		Aconcentration = __T("95");
 		Bconcentration = __T("75");
 	}
 	else {
-		if (Ac == 0) {//计算浓酒精浓度
+		if (Ac == 0 && Av) {//计算浓酒精浓度
 			unsigned int Acanswer = 1.0 * (1ll * Bc * Bv) / Av;
 			Aconcentration = changeuinttocstring(Acanswer);
+			double danswer= 1.0 * (1ll * Bc * Bv) / Av;
+			CString sanswer=__T(" ");
+			sanswer.Format(__T("浓酒精浓度为%.4f"),danswer);
+			MessageBox(sanswer, __T("计算结果"));
 		}
-		else if (Av == 0) {//计算浓酒精容积
+		else if (Av == 0 && Ac) {//计算浓酒精容积
 			unsigned int Avanswer = 1.0 * (1ll * Bc * Bv) / Ac;
 			Avolume = changeuinttocstring(Avanswer);
+			double danswer = 1.0 * (1ll * Bc * Bv) / Ac;
 			addwater = changeuinttocstring(Bv-Avanswer);
+			CString sanswer=__T(" ");
+			sanswer.Format(__T("浓酒精量为%.4fmL,加水量为%.4fmL"), danswer, Bv-danswer);
+			MessageBox(sanswer, __T("计算结果"));
 		}
-		else if (Bc == 0) {//计算稀酒精浓度
+		else if (Bc == 0 && Bv) {//计算稀酒精浓度
 			unsigned int Bcanswer = 1.0 * (1ll * Ac * Av) / Bv;
 			Bconcentration = changeuinttocstring(Bcanswer);
+			double danswer = 1.0 * (1ll * Ac * Av) / Bv;
+			CString sanswer = __T(" ");
+			sanswer.Format(__T("稀酒精浓度为%.4f"), danswer);
+			MessageBox(sanswer, __T("计算结果"));
 		}
-		else if (Bv == 0) {//计算稀酒精容积
+		else if (Bv == 0 && Bc) {//计算稀酒精容积
 			unsigned int Bvanswer = 1.0 * (1ll * Ac * Av) / Bc;
 			Bvolume = changeuinttocstring(Bvanswer);
+			double danswer = 1.0 * (1ll * Ac * Av) / Bc;
+			CString sanswer=__T(" ");
+			sanswer.Format(__T("稀酒精量为%.4fmL,加水量为%.4fmL"), danswer, danswer - Av);
+			MessageBox(sanswer, __T("计算结果"));
 			addwater = changeuinttocstring(Bvanswer - Av);
 		}
 	}
+
 	UpdateData(FALSE);
 }
 
